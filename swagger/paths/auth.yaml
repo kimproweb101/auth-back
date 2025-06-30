@@ -1,0 +1,412 @@
+paths:
+  /auth/login/email:
+    post:
+      summary: 이메일 로그인
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthLoginEmail"
+      responses:
+        "201":
+          description: 로그인 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: 회원가입 완료
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      email:
+                        type: string
+                        format: email
+                        example: user@example.com
+                      nickname:
+                        type: string
+                        example: 사용자
+                      provider:
+                        type: string
+                        example: local
+
+        "400":
+          description: 잘못된 요청 또는 중복 데이터
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    enum:
+                      - 이메일이 중복되었습니다.
+                      - 닉네임이 중복되었습니다.
+                      - 계정 정보를 확인해 주세요
+                    example: 이메일이 중복되었습니다.
+
+        "500":
+          description: 서버 내부 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: 로그인 처리 중 오류가 발생했습니다.
+
+  /auth/loadUser:
+    get:
+      summary: 로그인 후 로그인 정보 조회
+      tags:
+        - Auth
+      responses:
+        "201":
+          description: 로그인 정보
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: 회원가입 완료
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      email:
+                        type: string
+                        format: email
+                        example: user@example.com
+                      nickname:
+                        type: string
+                        example: 사용자
+                      provider:
+                        type: string
+                        example: local
+
+        "403":
+          description: 권한 없음
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    enum:
+                      - 로그인 후 이용해주세요
+                    example: 권한 없음
+  /auth/join:
+    post:
+      summary: 회원가입
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthJoin"
+      responses:
+        "201":
+          description: 가입 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: 회원가입 완료
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      email:
+                        type: string
+                        format: email
+                        example: user@example.com
+                      nickname:
+                        type: string
+                        example: 사용자넥네임
+                      provider:
+                        type: string
+                        example: local
+
+        "400":
+          description: 잘못된 요청 또는 중복 데이터
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    enum:
+                      - 이메일이 중복되었습니다.
+                      - 닉네임이 중복되었습니다.
+                      - 계정 정보를 확인해 주세요
+                    example: 이메일이 중복되었습니다.
+
+        "500":
+          description: 서버 내부 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: 로그인 처리 중 오류가 발생했습니다.
+  /auth/account:
+    patch:
+      summary: 회원 정보 수정
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthAccount"
+      responses:
+        "200":
+          description: 닉네임 변경 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: 닉네임 변경 성공
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      email:
+                        type: string
+                        format: email
+                        example: user@example.com
+                      nickname:
+                        type: string
+                        example: 사용자
+                      provider:
+                        type: string
+                        example: local
+        "400":
+          description: 잘못된 요청 또는 중복 데이터
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    enum:
+                      - 닉네임이 중복되었습니다.
+                    example: 닉네임이 중복되었습니다.
+        "500":
+          description: 서버 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    enum:
+                      - 서버 에러 입니다.
+                    example: 서버 에러 입니다.
+  /auth/account/password:
+    patch:
+      summary: 회원 비밀번호 변경
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthAccountPasswordUpdate"
+      responses:
+        "200":
+          description: 비밀번호 변경 성공
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: 비밀번호 변경 성공
+        "500":
+          description: 서버 내부 에러
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: 비밀번호 변경 중 오류가 발생했습니다.
+/auth/account/resetPasswordWithEmail:
+  patch:
+    summary: 이메일로 패스워드 재설정 메일 보내기
+    tags:
+      - Auth
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/accountResetPasswordWithEmail"
+    responses:
+      "200":
+        description: 이메일로 패스워드 재설정 메일 보내기 성공
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: 이메일을 확인 하신후 비밀번호를 재설정 해주세요.
+
+      "400":
+        description: 이메일 없음
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: 이메일은 필수 입력값 입니다.
+      "404":
+        description: 이메일 없음
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: 이메일은 필수 입력값 입니다.
+      "500":
+        description: 서버 내부 에러
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: 서버 내부 오류가 발생했습니다.
+/auth/account/resetPasswordWithEmailConfirm:
+  patch:
+    summary: 이메일로 패스워드 재설정 메일 보낸후 비밀번호 설정 확인
+    tags:
+      - Auth
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/accountResetPasswordWithEmailConfirm"
+    responses:
+      "200":
+        description: 비밀번호 변경이 완료 되었습니다.
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: true
+                message:
+                  type: string
+                  example: 비밀번호 변경이 완료 되었습니다.
+
+      "500":
+        description: 서버 내부 에러
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                success:
+                  type: boolean
+                  example: false
+                message:
+                  type: string
+                  example: 서버 내부 오류가 발생했습니다.

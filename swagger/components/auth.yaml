@@ -1,0 +1,53 @@
+components:
+  schemas:
+    AuthLoginEmail:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 100
+          example: user@example.com
+        password:
+          type: string
+          maxLength: 100
+          format: password
+          example: yourPassword123!
+    AuthJoin:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 100
+          example: user@example.com
+        password:
+          type: string
+          maxLength: 100
+          format: password
+          example: yourPassword123!
+        nickname:
+          type: string
+          maxLength: 100
+          example: yourNickname
+    AuthAccount:
+      type: object
+      properties:
+        nickname:
+          type: string
+          maxLength: 100
+          example: yourNickname
+    AuthAccountPasswordUpdate:
+      type: object
+      properties:
+        password:
+          type: string
+          maxLength: 100
+          example: yourPasword
+    accountResetPasswordWithEmail:
+      type: object
+      properties:
+        email:
+          type: string
+          maxLength: 100
+          example: yourEmail
